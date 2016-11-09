@@ -256,6 +256,9 @@ MonoBehaviour:
   tableau: []
   discardPile: []
   drawPile: []
+  chain: 0
+  scoreRun: 0
+  score: 0
 --- !u!114 &827460516
 MonoBehaviour:
   m_ObjectHideFlags: 0
