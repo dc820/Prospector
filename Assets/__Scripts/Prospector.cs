@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class Prospector : MonoBehaviour {
+public class Prospector : MonoBehaviour
+{
 
-	static public Prospector 	S;
-	public Deck					deck;
-	public TextAsset			deckXML;
+    static public Prospector S;
+    public Deck deck;
+    public TextAsset deckXML;
 
     public Layout layout;
     public TextAsset layoutXML;
@@ -21,23 +22,25 @@ public class Prospector : MonoBehaviour {
     public List<CardProspector> tableau;
     public List<CardProspector> discardPile;
 
-    void Awake(){
-		S = this;
-	}
+    void Awake()
+    {
+        S = this;
+    }
 
     public List<CardProspector> drawPile;
 
-    void Start() {
-		deck = GetComponent<Deck> ();
-		deck.InitDeck (deckXML.text);
-		Deck.Shuffle (ref deck.cards);
+    void Start()
+    {
+        deck = GetComponent<Deck>();
+        deck.InitDeck(deckXML.text);
+        Deck.Shuffle(ref deck.cards);
 
         layout = GetComponent<Layout>(); // Get the Layout
         layout.ReadLayout(layoutXML.text); // Pass LayoutXML to it
         drawPile = ConvertListCardsToListCardProspectors(deck.cards);
         LayoutGame();
     }
-   
+
     // The Draw function will pull a single card from the drawPile and return it
     CardProspector Draw()
     {
@@ -45,6 +48,23 @@ public class Prospector : MonoBehaviour {
         drawPile.RemoveAt(0); // Then remove it from List<> drawPile
         return (cd); // And return it
     }
+
+    // Convert from the layoutID int to the CardProspector with that ID
+    CardProspector FindCardByLayoutID(int layoutID)
+    {
+        foreach (CardProspector tCP in tableau)
+        {
+            // Search through all cards in the tableau List<>
+            if (tCP.layoutID == layoutID)
+            {
+                // If the card has the same ID, return it
+                return (tCP);
+            }
+        }
+        // If it's not found, return null
+        return (null);
+    }
+
     // LayoutGame() positions the initial tableau of cards, a.k.a. the "mine"
     void LayoutGame()
     {
@@ -77,6 +97,16 @@ public class Prospector : MonoBehaviour {
             // CardProspectors in the tableau have the state CardState.tableau
             cp.SetSortingLayerName(tSD.layerName); // Set the sorting layers
             tableau.Add(cp); // Add this CardProspector to the List<> tableau
+        }
+
+        // Set which cards are hiding others
+        foreach (CardProspector tCP in tableau)
+        {
+            foreach (int hid in tCP.slotDef.hiddenBy)
+            {
+                cp = FindCardByLayoutID(hid);
+                tCP.hiddenBy.Add(cp);
+            }
         }
 
         // Set up the initial target card
@@ -113,6 +143,22 @@ public class Prospector : MonoBehaviour {
                 break;
             case CardState.tableau:
                 // Clicking a card in the tableau will check if it's a valid play
+                bool validMatch = true;
+                if (!cd.faceUP)
+                {
+                    // If the card is face-down, it's not valid
+                    validMatch = false;
+                }
+                if (!AdjacentRank(cd, target))
+                {
+                    // If it's not an adjacent rank, it's not valid
+                    validMatch = false;
+                }
+                if (!validMatch) return; // return if not valid
+                                         // Yay! It's a valid card.
+                tableau.Remove(cd); // Remove it from the tableau List
+                MoveToTarget(cd); // Make it the target card
+                SetTableauFaces(); // Update tableau card face-ups
                 break;
         }
     }
@@ -172,6 +218,41 @@ public class Prospector : MonoBehaviour {
             // Set depth sorting
             cd.SetSortingLayerName(layout.drawPile.layerName);
             cd.SetSortOrder(-10 * i);
+        }
+    }
+
+    // Return true if the two cards are adjacent in rank (A & K wrap around)
+    public bool AdjacentRank(CardProspector c0, CardProspector c1)
+    {
+        // If either card is face-down, it's not adjacent.
+        if (!c0.faceUP || !c1.faceUP) return (false);
+        // If they are 1 apart, they are adjacent
+        if (Mathf.Abs(c0.rank - c1.rank) == 1)
+        {
+            return (true);
+        }
+        // If one is A and the other King, they're adjacent
+        if (c0.rank == 1 && c1.rank == 13) return (true);
+        if (c0.rank == 13 && c1.rank == 1) return (true);
+        // Otherwise, return false
+        return (false);
+    }
+
+    // This turns cards in the Mine face-up or face-down
+    void SetTableauFaces()
+    {
+        foreach (CardProspector cd in tableau)
+        {
+            bool fup = true; // Assume the card will be face-up
+            foreach (CardProspector cover in cd.hiddenBy)
+            {
+                // If either of the covering cards are in the tableau
+                if (cover.state == CardState.tableau)
+                {
+                    fup = false; // then this card is face-down
+                }
+            }
+            cd.faceUP = fup; // Set the value on the card
         }
     }
 }
