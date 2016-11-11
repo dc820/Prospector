@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 // An enum to handle all the possible scoring events
 public enum ScoreEvent
@@ -68,7 +69,7 @@ public class Prospector : MonoBehaviour
 
     void Start()
     {
-        //Scoreboard.S.score = score;
+        Scoreboard.S.score = score;
 
         deck = GetComponent<Deck>();
         deck.InitDeck(deckXML.text);
@@ -348,7 +349,7 @@ public class Prospector : MonoBehaviour
     void ReloadLevel()
     {
         // Reload the scene, resetting the game
-        Application.LoadLevel("__Prospector_Scene_0");
+        SceneManager.LoadScene("__Prospector_Scene_0");
     }
 
     // ScoreManager handles all of the scoring

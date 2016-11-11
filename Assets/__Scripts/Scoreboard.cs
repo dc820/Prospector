@@ -34,7 +34,7 @@ public class Scoreboard : MonoBehaviour
         set
         {
             _scoreString = value;
-            GetComponent<GUIText>().text = _scoreString;
+            GetComponent<Text>().text = _scoreString;
         }
     }
     void Awake()

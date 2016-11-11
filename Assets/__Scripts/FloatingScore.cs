@@ -28,7 +28,7 @@ public class FloatingScore : MonoBehaviour
         {
             _score = value;
             scoreString = Utils.AddCommasToNumber(_score);
-            GetComponent<GUIText>().text = scoreString;
+            GetComponent<Text>().text = scoreString;
         }
     }
     public List<Vector3> bezierPts; // Bezier points for movement
@@ -111,7 +111,7 @@ public class FloatingScore : MonoBehaviour
                 // If fontSizes has values in it
                 // ...then adjust the fontSize of this GUIText
                 int size = Mathf.RoundToInt(Utils.Bezier(uC, fontSizes));
-                GetComponent<GUIText>().fontSize = size;
+                GetComponent<Text>().fontSize = size;
             }
         }
     }
