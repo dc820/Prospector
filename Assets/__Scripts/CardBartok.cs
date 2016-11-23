@@ -33,6 +33,12 @@ public class CardBartok : Card
     public string eventualSortLayer;
 
     public GameObject reportFinishTo = null;
+    public Player callbackPlayer = null;
+    void Awake()
+    {
+        callbackPlayer = null; // Just to be sure.
+    }
+
     // MoveTo tells the card to interpolate to a new position and rotation
     public void MoveTo(Vector3 ePos, Quaternion eRot)
     {
@@ -103,6 +109,13 @@ public class CardBartok : Card
                         // to null so that it the card doesn't continue to report
                         // to the same GameObject every subsequent time it moves.
                         reportFinishTo = null;
+                    }
+                    else if (callbackPlayer != null)
+                    {
+                        // If there's a callback Player
+                        // then call CBCallback directly on the Player
+                        callbackPlayer.CBCallback(this);
+                        callbackPlayer = null;
                     }
                     else
                     { // If there is nothing to callback
