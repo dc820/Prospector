@@ -23,6 +23,22 @@ public class Player
         if (hand == null) hand = new List<CardBartok>();
         // Add the card to the hand
         hand.Add(eCB);
+        
+        // Sort the cards by rank using LINQ if this is a human
+        if (type == PlayerType.human)
+        {
+            CardBartok[] cards = hand.ToArray(); // Copy hand to a new array
+            // Below is the LINQ call that works on the array of CardBartoks.
+            // It is similar to doing a foreach(CardBartok cd in cards)
+            // and sorting them by rank. It then returns a sorted array
+            cards = cards.OrderBy(cd => cd.rank).ToArray();
+            // Convert the array CardBartok[] back to a List<CardBartok>
+            hand = new List<CardBartok>(cards);
+            // Note: LINQ operations can be a bit slow (like it could take a
+            // couple of milliseconds), but since we're only doing it once
+            // every turn, it isn't a problem.
+        }
+
         FanHand();
         return (eCB);
     }
@@ -67,11 +83,17 @@ public class Player
             // but which does keep their colliders from overlapping
             pos.z = -0.5f * i;
             // Set the localPosition and rotation of the ith card in the hand
+            hand[i].MoveTo(pos, rotQ); // Tell CardBartok to interpolate
+            hand[i].state = CBState.toHand;
+            // ^ After the move, CardBartok will set the state to CBState.hand
+
+            /* <= This "/*" begins a multiline comment
             hand[i].transform.localPosition = pos;
             hand[i].transform.rotation = rotQ;
             hand[i].state = CBState.hand;
-            // This uses a comparison operator to return a true or false bool
-            // So, if (type == PlayerType.human), hand[i].faceUp is set to true
+            */
+               // This uses a comparison operator to return a true or false bool
+               // So, if (type == PlayerType.human), hand[i].faceUp is set to true
             hand[i].faceUP = (type == PlayerType.human);
             // Set the SortOrder of the cards so that they overlap properly
             hand[i].SetSortOrder(i * 4);
