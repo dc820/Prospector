@@ -102,6 +102,7 @@ GameObject:
   - 92: {fileID: 827460511}
   - 124: {fileID: 827460510}
   - 81: {fileID: 827460509}
+  - 114: {fileID: 827460515}
   - 114: {fileID: 827460514}
   m_Layer: 0
   m_Name: _MainCamera
@@ -237,6 +238,24 @@ MonoBehaviour:
   decorators: []
   cardDefs: []
   deckAnchor: {fileID: 0}
+--- !u!114 &827460515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 827460508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89b9b11f3e18f3419b097f18b297bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckXML: {fileID: 4900000, guid: c76312a0fb08948699e1abf935e4a957, type: 3}
+  layoutXML: {fileID: 0}
+  layoutCenter: {x: 0, y: 0, z: 0}
+  ________________: 0
+  deck: {fileID: 0}
+  drawPile: []
+  discardPile: []
 --- !u!1 &1798294304
 GameObject:
   m_ObjectHideFlags: 0
