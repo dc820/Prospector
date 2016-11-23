@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // An enum to handle all the possible scoring events
 public enum ScoreEvent
@@ -41,8 +41,18 @@ public class Prospector : MonoBehaviour
     public CardProspector target;
     public List<CardProspector> tableau;
     public List<CardProspector> discardPile;
-    
 
+    public List<CardProspector> drawPile;
+
+    // Fields to track score info
+    public int chain = 0; // of cards in this run
+    public int scoreRun = 0;
+    public int score = 0;
+
+    public FloatingScore fsRun;
+
+    public Text GTGameOver;
+    public Text GTRoundResult;
 
     void Awake()
     {
@@ -56,16 +66,31 @@ public class Prospector : MonoBehaviour
         score += SCORE_FROM_PREV_ROUND;
         // And reset the SCORE_FROM_PREV_ROUND
         SCORE_FROM_PREV_ROUND = 0;
+
+        // Set up the GUITexts that show at the end of the round
+        // Get the GUIText Components
+        GameObject go = GameObject.Find("GameOver");
+        if (go != null)
+        {
+            GTGameOver = go.GetComponent<Text>();
+        }
+        go = GameObject.Find("RoundResult");
+        if (go != null)
+        {
+            GTRoundResult = go.GetComponent<Text>();
+        }
+        // Make them invisible
+        ShowResultGTs(false);
+        go = GameObject.Find("HighScore");
+        string hScore = "High Score: " + Utils.AddCommasToNumber(HIGH_SCORE);
+        go.GetComponent<Text>().text = hScore;
     }
 
-    public List<CardProspector> drawPile;
-
-    // Fields to track score info
-    public int chain = 0; // of cards in this run
-    public int scoreRun = 0;
-    public int score = 0;
-
-    public FloatingScore fsRun;
+    void ShowResultGTs(bool show)
+    {
+        GTGameOver.gameObject.SetActive(show);
+        GTRoundResult.gameObject.SetActive(show);
+    }
 
     void Start()
     {
@@ -353,6 +378,7 @@ public class Prospector : MonoBehaviour
     }
 
     // ScoreManager handles all of the scoring
+    // ScoreManager handles all of the scoring
     void ScoreManager(ScoreEvent sEvt)
     {
         List<Vector3> fsPts;
@@ -413,23 +439,31 @@ public class Prospector : MonoBehaviour
         switch (sEvt)
         {
             case ScoreEvent.gameWin:
+                GTGameOver.text = "Round Over";
                 // If it's a win, add the score to the next round
                 // static fields are NOT reset by Application.LoadLevel()
                 Prospector.SCORE_FROM_PREV_ROUND = score;
                 print("You won this round! Round score: " + score);
+                GTRoundResult.text = "You won this round!\nRound Score: " + score;
+                ShowResultGTs(true);
                 break;
             case ScoreEvent.gameLoss:
+                GTGameOver.text = "Game Over";
                 // If it's a loss, check against the high score
                 if (Prospector.HIGH_SCORE <= score)
                 {
                     print("You got the high score! High score: " + score);
+                    string sRR = "You got the high score!\nHigh score: " + score;
+                    GTRoundResult.text = sRR;
                     Prospector.HIGH_SCORE = score;
                     PlayerPrefs.SetInt("ProspectorHighScore", score);
                 }
                 else
                 {
                     print("Your final score for the game was: " + score);
+                    GTRoundResult.text = "Your final score was: " + score;
                 }
+                ShowResultGTs(true);
                 break;
             default:
                 print("score: " + score + " scoreRun:" + scoreRun + " chain:" + chain);
