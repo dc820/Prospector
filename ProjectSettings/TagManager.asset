@@ -59,3 +59,33 @@ TagManager:
   - name: Draw
     uniqueID: 2819588025
     locked: 0
+  - name: 1
+    uniqueID: 4109041101
+    locked: 0
+  - name: 2
+    uniqueID: 2035651533
+    locked: 0
+  - name: 3
+    uniqueID: 2425072999
+    locked: 0
+  - name: 4
+    uniqueID: 2319234463
+    locked: 0
+  - name: 5
+    uniqueID: 615293495
+    locked: 0
+  - name: 6
+    uniqueID: 3072260997
+    locked: 0
+  - name: 7
+    uniqueID: 2400860139
+    locked: 0
+  - name: 8
+    uniqueID: 1490930987
+    locked: 0
+  - name: 9
+    uniqueID: 3571292247
+    locked: 0
+  - name: 10
+    uniqueID: 999540307
+    locked: 0
