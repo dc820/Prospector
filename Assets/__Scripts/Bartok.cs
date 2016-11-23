@@ -228,23 +228,62 @@ public class Bartok : MonoBehaviour
         return (cd); // And return it
     }
     // This Update method is used to test adding cards to players' hands
-   /* void Update()
+    /* void Update()
+     {
+         if (Input.GetKeyDown(KeyCode.Alpha1))
+         {
+             players[0].AddCard(Draw());
+         }
+         if (Input.GetKeyDown(KeyCode.Alpha2))
+         {
+             players[1].AddCard(Draw());
+         }
+         if (Input.GetKeyDown(KeyCode.Alpha3))
+         {
+             players[2].AddCard(Draw());
+         }
+         if (Input.GetKeyDown(KeyCode.Alpha4))
+         {
+             players[3].AddCard(Draw());
+         }
+     }*/
+
+    public void CardClicked(CardBartok tCB)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // If it's not the human's turn, don't respond
+        if (CURRENT_PLAYER.type != PlayerType.human) return;
+        // If the game is waiting on a card to move, don't respond
+        if (phase == TurnPhase.waiting) return;
+        // Act differently based on whether it was a card in hand
+        // or on the drawPile that was clicked
+        switch (tCB.state)
         {
-            players[0].AddCard(Draw());
+            case CBState.drawpile:
+                // Draw the top card, not necessarily the one clicked.
+                CardBartok cb = CURRENT_PLAYER.AddCard(Draw());
+                cb.callbackPlayer = CURRENT_PLAYER;
+                Utils.tr(Utils.RoundToPlaces(Time.time),
+                "Bartok.CardClicked()", "Draw", cb.name);
+                phase = TurnPhase.waiting;
+                break;
+            case CBState.hand:
+                // Check to see whether the card is valid
+                if (ValidPlay(tCB))
+                {
+                    CURRENT_PLAYER.RemoveCard(tCB);
+                    MoveToTarget(tCB);
+                    tCB.callbackPlayer = CURRENT_PLAYER;
+                    Utils.tr(Utils.RoundToPlaces(Time.time), "Bartok.CardClicked()",
+                    "Play", tCB.name, targetCard.name + " is target");
+                    phase = TurnPhase.waiting;
+                }
+                else
+                {
+                    // Just ignore it
+                    Utils.tr(Utils.RoundToPlaces(Time.time), "Bartok.CardClicked()",
+                    "Attempted to Play", tCB.name, targetCard.name + " is target");
+                }
+                break;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            players[1].AddCard(Draw());
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            players[2].AddCard(Draw());
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            players[3].AddCard(Draw());
-        }
-    }*/
+    }
 }

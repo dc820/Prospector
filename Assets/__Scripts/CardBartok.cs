@@ -145,4 +145,12 @@ public class CardBartok : Card
                 break;
         }
     }
+    // This allows the card to react to being clicked
+    override public void OnMouseUpAsButton()
+    {
+        // Call the CardClicked method on the Bartok singleton
+        Bartok.S.CardClicked(this);
+        // Also call the base class (Card.cs) version of this method
+        base.OnMouseUpAsButton();
+    }
 }
