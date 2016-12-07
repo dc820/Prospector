@@ -149,6 +149,28 @@ public class Player
         Utils.tr(Utils.RoundToPlaces(Time.time),
         "Player.CBCallback()", tCB.name, "Player " + playerNum);
         // The card is done moving, so pass the turn
-        Bartok.S.PassTurn();
+        if (tCB.rank == 1 && Bartok.S.gameMode == "Ace")
+        {
+            skip(tCB);
+        }
+        else
+        {
+            Bartok.S.PassTurn();
+        }
+    }
+
+    public void skip(CardBartok tCB)
+    {
+            int passNum = Bartok.CURRENT_PLAYER.playerNum - 1;
+            passNum += 2;
+            if (passNum == 4)
+            {
+                passNum = 0;
+            }
+            if (passNum == 5)
+            {
+                passNum = 1;
+            }
+            Bartok.S.PassTurn(passNum);
     }
 }

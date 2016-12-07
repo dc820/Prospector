@@ -288,9 +288,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: FT
-        m_Mode: 1
+      - m_Target: {fileID: 827460515}
+        m_MethodName: SetMode
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -505,9 +505,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Ace
-        m_Mode: 1
+      - m_Target: {fileID: 827460515}
+        m_MethodName: SetMode
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1134,9 +1134,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: DP
-        m_Mode: 1
+      - m_Target: {fileID: 827460515}
+        m_MethodName: SetMode
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1480,9 +1480,10 @@ MonoBehaviour:
   turnLight: {fileID: 0}
   GTGameOver: {fileID: 0}
   GTRoundResult: {fileID: 0}
-  count: 0
   EndCanvas: {fileID: 105945750}
   RulesCanvas: {fileID: 1250647779}
+  currentGameMode: 0
+  gameMode: 0
 --- !u!114 &827460516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,9 +1774,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: D2
-        m_Mode: 1
+      - m_Target: {fileID: 827460515}
+        m_MethodName: SetMode
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2091,9 +2092,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: RD
-        m_Mode: 1
+      - m_Target: {fileID: 827460515}
+        m_MethodName: SetMode
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
