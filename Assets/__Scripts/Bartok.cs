@@ -48,7 +48,9 @@ public class Bartok : MonoBehaviour
     public Canvas EndCanvas;
     public Canvas RulesCanvas;
 
-    public string gameMode;
+    public static string gameMode = "Ace";
+
+    public bool isReverse = false;
 
     void Awake()
     {
@@ -62,6 +64,7 @@ public class Bartok : MonoBehaviour
         GTRoundResult.SetActive(false);
         EndCanvas.enabled = false;
         RulesCanvas.enabled = false;
+        Debug.Log(gameMode);
 
     }
     void Start()
@@ -178,8 +181,20 @@ public class Bartok : MonoBehaviour
         // If no number was passed in, pick the next player
         if (num == -1)
         {
-            int ndx = players.IndexOf(CURRENT_PLAYER);
-            num = (ndx + 1) % 4;
+            if (isReverse == true)
+            {
+                int ndx = players.IndexOf(CURRENT_PLAYER);
+                num = (ndx - 1);
+                if (num == -1)
+                {
+                    num = 3;
+                }
+            }
+            else
+            {
+                int ndx = players.IndexOf(CURRENT_PLAYER);
+                num = (ndx + 1) % 4;
+            }
         }
         int lastPlayerNum = -1;
         if (CURRENT_PLAYER != null)
@@ -201,6 +216,9 @@ public class Bartok : MonoBehaviour
         Utils.tr(Utils.RoundToPlaces(Time.time), "Bartok.PassTurn()",
         "Old: " + lastPlayerNum, "New: " + CURRENT_PLAYER.playerNum);
     }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // ValidPlay verifies that the card chosen can be played on the discard pile
     public bool ValidPlay(CardBartok cb) //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     {
@@ -354,15 +372,15 @@ public class Bartok : MonoBehaviour
     public void RestartGame()
     {
         CURRENT_PLAYER = null;
+        gameMode = "";
         SceneManager.LoadScene("__Bartok_Scene_0");
     }
-
-    public void newGame()
+    public void newMode()
     {
         CURRENT_PLAYER = null;
-        RulesCanvas.enabled = false;
-
+        SceneManager.LoadScene("__Bartok_Scene_0"); ;
     }
+
 
     public void ReturnOn()
     {
@@ -380,7 +398,7 @@ public class Bartok : MonoBehaviour
     public void SetMode(string gm)
     {
         gameMode = gm;
-        newGame();
+        newMode ();
     }
 
     public void Update()

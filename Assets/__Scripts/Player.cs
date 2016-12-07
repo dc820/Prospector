@@ -149,9 +149,15 @@ public class Player
         Utils.tr(Utils.RoundToPlaces(Time.time),
         "Player.CBCallback()", tCB.name, "Player " + playerNum);
         // The card is done moving, so pass the turn
-        if (tCB.rank == 1 && Bartok.S.gameMode == "Ace")
+        
+        if (tCB.rank == 1 && Bartok.gameMode == "Ace") // Ace is Skip
         {
-            skip(tCB);
+            Skip(tCB);
+        }
+        else if ((tCB.rank == 12 && Bartok.gameMode == "Royal") || (tCB.rank == 13 && Bartok.gameMode == "Royal")) //King and Queen are Reverse Cards
+        {
+            Bartok.S.isReverse = !Bartok.S.isReverse;
+            Bartok.S.PassTurn();
         }
         else
         {
@@ -159,7 +165,7 @@ public class Player
         }
     }
 
-    public void skip(CardBartok tCB)
+    public void Skip(CardBartok tCB)
     {
             int passNum = Bartok.CURRENT_PLAYER.playerNum - 1;
             passNum += 2;
