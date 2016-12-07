@@ -44,11 +44,10 @@ public class Bartok : MonoBehaviour
 
     public GameObject GTGameOver;
     public GameObject GTRoundResult;
-    public GameObject Restartbtn;
-    public GameObject Addbtn;
-    public GameObject Exitbtn;
+    public int count = 0;
 
     public Canvas EndCanvas;
+    public Canvas RulesCanvas;
 
     void Awake()
     {
@@ -58,12 +57,14 @@ public class Bartok : MonoBehaviour
         turnLight = GameObject.Find("TurnLight");
         GTGameOver = GameObject.Find("GTGameOver");
         GTRoundResult = GameObject.Find("GTRoundResult");
-        Restartbtn = GameObject.Find("Restartbtn");
-        Addbtn = GameObject.Find("Addbtn");
-        Exitbtn = GameObject.Find("Exitbtn");
         GTGameOver.SetActive(false);
         GTRoundResult.SetActive(false);
         EndCanvas.enabled = false;
+        RulesCanvas.enabled = false;
+        if(count != 0)
+        {
+            AddRules();
+        }
 
     }
     void Start()
@@ -353,6 +354,7 @@ public class Bartok : MonoBehaviour
     public void RestartGame()
     {
         CURRENT_PLAYER = null;
+        count = 0;
         SceneManager.LoadScene("__Bartok_Scene_0");
     }
 
@@ -363,7 +365,10 @@ public class Bartok : MonoBehaviour
 
     public void AddRules()
     {
- 
+        GTGameOver.SetActive(false);
+        GTRoundResult.SetActive(false);
+        EndCanvas.enabled = false;
+        RulesCanvas.enabled = true;
     }
     public void Update()
     {
