@@ -428,6 +428,7 @@ public class Utils : MonoBehaviour
 
     static public void tr(params object[] objs)
     {
+        return;
         string s = objs[0].ToString();
         for (int i = 1; i < objs.Length; i++)
         {
