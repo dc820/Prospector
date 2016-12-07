@@ -48,7 +48,7 @@ public class Bartok : MonoBehaviour
     public Canvas EndCanvas;
     public Canvas RulesCanvas;
 
-    public static string gameMode = "Ace";
+    public static string gameMode = "Draw";
 
     public bool isReverse = false;
 
@@ -270,26 +270,6 @@ public class Bartok : MonoBehaviour
         drawPile.RemoveAt(0); // Then remove it from List<> drawPile
         return (cd); // And return it
     }
-    // This Update method is used to test adding cards to players' hands
-    /* void Update()
-     {
-         if (Input.GetKeyDown(KeyCode.Alpha1))
-         {
-             players[0].AddCard(Draw());
-         }
-         if (Input.GetKeyDown(KeyCode.Alpha2))
-         {
-             players[1].AddCard(Draw());
-         }
-         if (Input.GetKeyDown(KeyCode.Alpha3))
-         {
-             players[2].AddCard(Draw());
-         }
-         if (Input.GetKeyDown(KeyCode.Alpha4))
-         {
-             players[3].AddCard(Draw());
-         }
-     }*/
 
     public void CardClicked(CardBartok tCB)
     {
@@ -304,6 +284,7 @@ public class Bartok : MonoBehaviour
             case CBState.drawpile:
                 // Draw the top card, not necessarily the one clicked.
                 CardBartok cb = CURRENT_PLAYER.AddCard(Draw());
+                //CardBartok cb2 = CURRENT_PLAYER.AddCard(Draw());
                 cb.callbackPlayer = CURRENT_PLAYER;
                 Utils.tr(Utils.RoundToPlaces(Time.time),
                 "Bartok.CardClicked()", "Draw", cb.name);
@@ -407,5 +388,10 @@ public class Bartok : MonoBehaviour
         {
             RestartGame();
         }
+        /*if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+           players[0].AddCard(Draw());
+        }*/
     }
+    
 }

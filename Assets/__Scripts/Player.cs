@@ -144,6 +144,7 @@ public class Player
         Bartok.S.MoveToTarget(cb);
         cb.callbackPlayer = this;
     }
+    int drawCount = 0;
     public void CBCallback(CardBartok tCB)
     {
         Utils.tr(Utils.RoundToPlaces(Time.time),
@@ -164,6 +165,20 @@ public class Player
             else
             {
                 Bartok.S.PassTurn();
+            }
+        }
+        else if (tCB.state == CBState.hand && Bartok.gameMode == "Draw")
+        {
+            drawCount++;
+            if (drawCount == 2)
+            {
+                drawCount = 0;
+                Bartok.S.PassTurn();
+            }
+            else
+            {
+                CardBartok cb = AddCard(Bartok.S.Draw());
+                cb.callbackPlayer = this;
             }
         }
         else
