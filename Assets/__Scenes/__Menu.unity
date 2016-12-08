@@ -873,7 +873,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Match cards by number value or color. If not possible, draw a card. Winner
-    gets to add a rule.
+    gets to add a rule. Press F5 to restart the game
 --- !u!222 &921794848
 CanvasRenderer:
   m_ObjectHideFlags: 0
