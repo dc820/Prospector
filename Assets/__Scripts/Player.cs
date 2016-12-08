@@ -147,8 +147,8 @@ public class Player
     int drawCount = 0;
     public void CBCallback(CardBartok tCB)
     {
-        Utils.tr(Utils.RoundToPlaces(Time.time),
-        "Player.CBCallback()", tCB.name, "Player " + playerNum);
+        //Utils.tr(Utils.RoundToPlaces(Time.time),
+        //"Player.CBCallback()", tCB.name, "Player " + playerNum);
         // The card is done moving, so pass the turn
 
         if (tCB.state == CBState.toTarget)
@@ -161,6 +161,11 @@ public class Player
             {
                 Bartok.S.isReverse = !Bartok.S.isReverse;
                 Bartok.S.PassTurn();
+            }
+            else if (tCB.rank == Bartok.S.discardPile[Bartok.S.discardPile.Count - 1].rank && Bartok.gameMode == "Double")
+            {
+                int passNum = Bartok.CURRENT_PLAYER.playerNum - 1;
+                Bartok.S.PassTurn(passNum);
             }
             else
             {

@@ -48,7 +48,7 @@ public class Bartok : MonoBehaviour
     public Canvas EndCanvas;
     public Canvas RulesCanvas;
 
-    public static string gameMode = "Draw";
+    public static string gameMode = "";
 
     public bool isReverse = false;
 

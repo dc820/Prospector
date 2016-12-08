@@ -947,10 +947,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Ace!: Ace is a skip and draw 1 card\r\nRoyal Decree: King and Queen reverse
-    the turn order\r\nDouble Play: Play another card if card values match\r\nDraw
-    +2: Draw two cards instead of 1 each turn\r\nFair Trade: Everyone passes 1 card
-    each turn"
+  m_Text: "Ace!: Ace is a skip\r\nRoyal Decree: King and Queen reverse the turn order\r\nDouble
+    Play: Play another card if card values match\r\nDraw +2: Draw two cards instead
+    of 1 each turn\r"
 --- !u!222 &1217718783
 CanvasRenderer:
   m_ObjectHideFlags: 0
